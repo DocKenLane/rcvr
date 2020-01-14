@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Conduct instant runoff</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for conduct_runoff {rcvr}"><tr><td>conduct_runoff {rcvr}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Conduct instant runoff</h2>
+
+<h3>Description</h3>
+
+<p>Conducts a ranked choice instant runoff. Does not resolve ties, as yet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+conduct_runoff(
+  cntst,
+  sequentialU = FALSE,
+  max_U = 2,
+  sequentialO = FALSE,
+  max_O = 1,
+  june2018 = FALSE,
+  quietly = TRUE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cntst</code></td>
+<td>
+<p>A <code>contest</code> instance.</p>
+</td></tr>
+<tr valign="top"><td><code>june2018</code></td>
+<td>
+<p>If <code>TRUE</code> duplicates official State tabulations.</p>
+</td></tr>
+<tr valign="top"><td><code>quietly</code></td>
+<td>
+<p>When <code>FALSE</code> many routines get noisy.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A <code>tabulation</code> instance.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>rcvr</em> version 0.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

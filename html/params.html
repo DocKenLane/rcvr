@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: rcvr parameters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for params {rcvr}"><tr><td>params {rcvr}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>rcvr parameters</h2>
+
+<h3>Description</h3>
+
+<p>The rcvr package provides functions for reading, analyzing, and visualizing
+ballot data from Ranked Choice Voting elections.
+</p>
+<p>When <code><a href="rcvr.html">rcvr</a></code> is installed, missing *url* arguments default to the
+*extdata* subfolder of the installed *rcvr* package folder on the local machine
+(*system.file(&quot;extdata&quot;, package = &quot;rcvr&quot;).
+If space is an issue, the utility *dump_default_files()* is provided for your
+cobvenience.
+</p>
+<p>For ease of of development, second copy of default data files are installed the
+*extdata* subfolder of the *rcvr* package development directory
+(*system.file(&quot;extdata&quot;, package = &quot;rcvr*).
+</p>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>alternative</code></td>
+<td>
+<p>Candidate or alternative for a <code><a href="contest.html">contest</a></code> (char).</p>
+</td></tr>
+<tr valign="top"><td><code>alternatives</code></td>
+<td>
+<p>Container for all alternatives in a <code>contest</code> (char).</p>
+</td></tr>
+<tr valign="top"><td><code>alternative_code</code></td>
+<td>
+<p>Character vector of codes <code>"[A-N]"</code> for representing
+<code>alternatives</code> in a <code>contest</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>ambiguity</code></td>
+<td>
+<p>The string found on the CVR representing an unresolved ranking.</p>
+</td></tr>
+<tr valign="top"><td><code>ambiguities</code></td>
+<td>
+<p>Container for ambiguities in a <code>contest</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>contest_name</code></td>
+<td>
+<p>For example &quot;Democratic Primary&quot;.
+With padding removed, used for first part of the <code>*.rda</code>
+file name for serializing the contest.</p>
+</td></tr>
+<tr valign="top"><td><code>contest_str</code></td>
+<td>
+<p>Must reference an <code>object</code> value in <code>key_values.txt</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>continuing_alternatives</code></td>
+<td>
+<p>A subset of <code>alternative_code</code> representing
+continuing alternatives in a tabulation.</p>
+</td></tr>
+<tr valign="top"><td><code>cntst</code></td>
+<td>
+<p>A <code>contest</code> instance.</p>
+</td></tr>
+<tr valign="top"><td><code>creator</code></td>
+<td>
+<p>Human creating <code>contest</code> object.</p>
+</td></tr>
+<tr valign="top"><td><code>CVR</code></td>
+<td>
+<p>A list of dataframes with cast vote records. Usually raw data saved
+used by the constructor and saved as metadata for a <code>contest</code> instance.</p>
+</td></tr>
+<tr valign="top"><td><code>CVR_files</code></td>
+<td>
+<p>Cast Vote Record file names.</p>
+</td></tr>
+<tr valign="top"><td><code>date_str</code></td>
+<td>
+<p>Encoded as MM/DD/YYYY. Forms the second part of the
+<code>*.rda</code> file name for serializing the contest.</p>
+</td></tr>
+<tr valign="top"><td><code>june2018</code></td>
+<td>
+<p>If <code>TRUE</code> duplicates official State tabulations.</p>
+</td></tr>
+<tr valign="top"><td><code>jurisdiction</code></td>
+<td>
+<p>Set as appropriate.</p>
+</td></tr>
+<tr valign="top"><td><code>source</code></td>
+<td>
+<p>Folder of CVR files.</p>
+</td></tr>
+<tr valign="top"><td><code>office</code></td>
+<td>
+<p>Encodes the name of the office or referendum at issue.
+With padding  removed, forms the third part of the
+<code>*.rda</code> file name for serializing the contest.</p>
+</td></tr>
+<tr valign="top"><td><code>original</code></td>
+<td>
+<p>If <code>original == TRUE</code>, <code>contest_str</code> must match
+an <code>object</code> value in <code>contest_keys.txt</code> file in working directory,
+with <code>cvr_url</code> value
+and all <code>cvr_file</code> values needed to reconstruct the election.</p>
+</td></tr>
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>Some folder, somewhere. Typically defaults to working directory.</p>
+</td></tr>
+<tr valign="top"><td><code>quietly</code></td>
+<td>
+<p>When <code>FALSE</code> many routines get noisy.</p>
+</td></tr>
+<tr valign="top"><td><code>round</code></td>
+<td>
+<p>An instance of a RC/IR runoff round.</p>
+</td></tr>
+<tr valign="top"><td><code>url</code></td>
+<td>
+<p>Universal Resource Locator.</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>rcvr</em> version 0.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

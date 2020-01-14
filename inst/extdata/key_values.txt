@@ -1,0 +1,54 @@
+object|field|value
+gov_June|office|Governor
+d2_June|office|Congressional District 2
+d2_Nov|office|Congressional District 2
+gov_June|contest_name|Democratic Primary Election
+d2_June|contest_name|Democratic Primary Election
+d2_Nov|contest_name|General Election
+gov_June|slate|Cote
+gov_June|slate|Dion, D
+gov_June|slate|Dion, M
+gov_June|slate|Eves
+gov_June|slate|Mills
+gov_June|slate|Russell
+gov_June|slate|Sweet
+gov_June|slate|Write-in
+gov_June|cvr_file|govd-1
+gov_June|cvr_file|govd-2
+gov_June|cvr_file|govd-3
+gov_June|cvr_file|govd-4
+gov_June|cvr_file|govd-5
+d2_June|slate|Fulford
+d2_June|slate|Golden
+d2_June|slate|Olson
+d2_June|slate|St. Clair
+d2_June|cvr_file|congressd2-1
+d2_June|cvr_file|congressd2-2
+d2_June|cvr_file|congressd2-3
+d2_June|cvr_file|congressd2-4
+d2_Nov|cvr_file|Nov18CVRExportFINAL1
+d2_Nov|cvr_file|Nov18CVRExportFINAL2
+d2_Nov|cvr_file|Nov18CVRExportFINAL3
+d2_Nov|cvr_file|AUXCVRProofedCVR95RepCD2
+d2_Nov|cvr_file|UOCAVA2CVRRepCD2
+d2_Nov|cvr_file|UOCAVA-AUX-CVRRepCD2
+d2_Nov|cvr_file|UOCAVA-FINALRepCD2
+d2_Nov|cvr_file|RepCD2-8final
+d2_Nov|slate|Bond
+d2_Nov|slate|Golden
+d2_Nov|slate|Hoar
+d2_Nov|slate|Poliquin
+d2_Nov|cvr_url|https://www.maine.gov/sos/cec/elec/results/2018
+gov_June|cvr_url|https://www.maine.gov/sos/cec/elec/results/2018
+d2_June|cvr_url|https://www.maine.gov/sos/cec/elec/results/2018
+d2_Nov|re_url|https://www.maine.gov/sos/cec/elec/data/data-txt
+d2_June|re_url|https://www.maine.gov/sos/cec/elec/data/data-txt
+gov_June|re_url|https://www.maine.gov/sos/cec/elec/data/data-txt
+d2_Nov|date_str|11062018
+d2_June|date_str|06122018
+gov_June|date_str|06122018
+munidist|url|https://www.maine.gov/sos/cec/elec/2013/munidist2013.xlsx
+munidist|file_name|munidist2013.xlsx
+townshipdist|url|https://www.maine.gov/sos/cec/elec/apport/townshipdist.xlsx
+townshipdist|file_name|townshipdist.xlsx
+voting_place|url|https://www.maine.gov/sos/cec/elec/data/votingplace1119.xlsx

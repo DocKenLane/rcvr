@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Encode cast vote record rankings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for encode_cvr_rankings {rcvr}"><tr><td>encode_cvr_rankings {rcvr}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Encode cast vote record rankings</h2>
+
+<h3>Description</h3>
+
+<p>Encodes rankings on each ranked choice cvr as a single
+string <code>rank_str</code> with a character [A-Z] for each
+ranking, designating a specific <code>alternative_code</code>
+or <code>ambiguity_code</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+encode_cvr_rankings(cntst, cvr_mark_code)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cntst</code></td>
+<td>
+<p>A <code>contest</code> instance.</p>
+</td></tr>
+<tr valign="top"><td><code>cvr_mark_code</code></td>
+<td>
+<p>The concatenation of <code>alternative_code</code> and
+<code>ambiguity_code</code>.
+The vector of characters to used to encode
+each ballot. Alternatives use <code>as.character(LETTERS[1:num_alternatives])</code>
+with U and O for alternatives. <code>names(cvr_mark_code)</code> corresponds to
+entries in the choice fields of <code>cntst</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A <code>rank_str</code>)
+derived from ranking data for each record.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>rcvr</em> version 0.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

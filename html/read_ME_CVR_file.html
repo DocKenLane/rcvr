@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Read Maine CVR file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for read_ME_CVR_file {rcvr}"><tr><td>read_ME_CVR_file {rcvr}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Read Maine CVR file</h2>
+
+<h3>Description</h3>
+
+<p>Read Maine CVR file
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+read_ME_CVR_file(url, original = FALSE, quietly = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>url</code></td>
+<td>
+<p>Universal Resource Locator.</p>
+</td></tr>
+<tr valign="top"><td><code>original</code></td>
+<td>
+<p>If <code>original == TRUE</code>, <code>contest_str</code> must match
+an <code>object</code> value in <code>contest_keys.txt</code> file in working directory,
+with <code>cvr_url</code> value
+and all <code>cvr_file</code> values needed to reconstruct the election.</p>
+</td></tr>
+<tr valign="top"><td><code>quietly</code></td>
+<td>
+<p>When <code>FALSE</code> many routines get noisy.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A tibble of raw CVR data, Maine style.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>rcvr</em> version 0.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

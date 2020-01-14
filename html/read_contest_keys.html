@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Read contest keys</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for read_contest_keys {rcvr}"><tr><td>read_contest_keys {rcvr}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Read contest keys</h2>
+
+<h3>Description</h3>
+
+<p>Get names and such for loading election data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+read_contest_keys(contest_str, path = getwd())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>contest_str</code></td>
+<td>
+<p>Must reference an <code>object</code> value in <code>key_values.txt</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>Some folder, somewhere. Typically defaults to working directory.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Names for an election
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+read_key_values(contest_str = "d2_June", path = "My data folder")
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>rcvr</em> version 0.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

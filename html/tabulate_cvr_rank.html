@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Tabulate CVR rank string</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for tabulate_cvr_rank {rcvr}"><tr><td>tabulate_cvr_rank {rcvr}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Tabulate CVR rank string</h2>
+
+<h3>Description</h3>
+
+<p>Implements rules for the disposition of a cast vote record <code>rank_str</code>,
+including the disposition of ambiguities such as overvotes and undervotes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tabulate_cvr_rank(
+  rank_str,
+  continuing_alternatives,
+  sequentialO = FALSE,
+  max_O = 1,
+  sequentialU = FALSE,
+  max_U = 2,
+  june2018 = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>sequentialO</code></td>
+<td>
+<p>If <code>TRUE</code>, <code>max_O</code> sequential overvotes <code>exhaust</code>
+the cvr by undervote, <code>status_code = "exo"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>max_O</code></td>
+<td>
+<p>The number of overvotes triggering a potential overvote,
+according to the value of <code>sequentialO</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>sequentialU</code></td>
+<td>
+<p>If <code>TRUE</code>, <code>max_u</code> sequential undervotes <code>exhaust</code>
+the cvr by undervote, <code>status_code = "exu"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>max_U</code></td>
+<td>
+<p>The number of undervotes triggering a potential undervote,
+according to the value of <code>sequentialO</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A value from <code>status_code</code>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>rcvr</em> version 0.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

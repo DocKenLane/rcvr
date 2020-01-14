@@ -1,0 +1,80 @@
+# Configuration file for Maine elections. Objects are typically contest instances.
+#
+object|field|value
+#
+#
+# June 2018 Democratic Governor Primary
+#
+gov_June|contest_name|Democratic Primary Election
+gov_June|office|Governor
+gov_June|date_str|06122018
+gov_June|cvr_url|https://www.maine.gov/sos/cec/elec/results/2018
+gov_June|re_url|https://www.maine.gov/sos/cec/elec/data/data-txt
+gov_June|alternative|Cote
+gov_June|alternative|Dion, D
+gov_June|alternative|Dion, M
+gov_June|alternative|Eves
+gov_June|alternative|Mills
+gov_June|alternative|Russell
+gov_June|alternative|Sweet
+gov_June|alternative|Write-in
+gov_June|ambiguity|undervote
+gov_June|ambiguity|overvote
+gov_June|cvr_file|govd-1.xlsx
+gov_June|cvr_file|govd-2.xlsx
+gov_June|cvr_file|govd-3.xlsx
+gov_June|cvr_file|govd-4.xlsx
+gov_June|cvr_file|govd-5.xlsx
+gov_June|path|inst/extdata
+#
+#
+# June 2018 Congressional District 2 Primary
+#
+d2_June|contest_name|Democratic Primary Election
+d2_June|office|Congressional District 2
+d2_June|date_str|06/12/2018
+d2_June|cvr_url|https://www.maine.gov/sos/cec/elec/results/2018
+d2_June|re_url|https://www.maine.gov/sos/cec/elec/data/data-txt
+d2_June|alternative|Fulford
+d2_June|alternative|Golden
+d2_June|alternative|Olson
+d2_June|alternative|St. Clair
+d2_June|ambiguity|undervote
+d2_June|ambiguity|overvote
+d2_June|cvr_file|congressd2-1.xlsx
+d2_June|cvr_file|congressd2-2.xlsx
+d2_June|cvr_file|congressd2-3.xlsx
+d2_June|cvr_file|congressd2-4.xlsx
+d2_June|path|inst/extdata
+#
+#
+# Fall 2018 Congressional District 2
+#
+d2_Nov|contest_name|General Election
+d2_Nov|office|Congressional District 2
+d2_Nov|date_str|11062018
+d2_Nov|cvr_url|https://www.maine.gov/sos/cec/elec/results/2018
+d2_Nov|re_url|https://www.maine.gov/sos/cec/elec/data/data-txt
+d2_Nov|cvr_file|Nov18CVRExportFINAL1.xlsx
+d2_Nov|cvr_file|Nov18CVRExportFINAL2.xlsx
+d2_Nov|cvr_file|Nov18CVRExportFINAL3.xlsx
+d2_Nov|cvr_file|AUXCVRProofedCVR95RepCD2.xlsx
+d2_Nov|cvr_file|UOCAVA2CVRRepCD2.xlsx
+d2_Nov|cvr_file|UOCAVA-AUX-CVRRepCD2.xlsx
+d2_Nov|cvr_file|UOCAVA-FINALRepCD2.xlsx
+d2_Nov|cvr_file|RepCD2-8final.xlsx
+d2_Nov|alternative|Bond
+d2_Nov|alternative|Golden
+d2_Nov|alternative|Hoar
+d2_Nov|alternative|Poliquin
+d2_Nov|ambiguity|undervote
+d2_Nov|ambiguity|overvote
+d2_Nov|path|inst/extdata
+#
+#
+#
+munidist|url|https://www.maine.gov/sos/cec/elec/2013/munidist2013.xlsx
+munidist|file_name|munidist2013.xlsx
+townshipdist|url|https://www.maine.gov/sos/cec/elec/apport/townshipdist.xlsx
+townshipdist|file_name|townshipdist.xlsx
+voting_place|url|https://www.maine.gov/sos/cec/elec/data/votingplace1119.xlsx

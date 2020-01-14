@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create contest object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for contest {rcvr}"><tr><td>contest {rcvr}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create contest object</h2>
+
+<h3>Description</h3>
+
+<p>Constructor for instances of S3 class
+<code>contest</code> implemented as <code>tbl_df</code> with metadata.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+contest(
+  contest_name,
+  source = NULL,
+  CVR_files = NULL,
+  original = FALSE,
+  contest_str = NULL,
+  date_str = NULL,
+  office = NULL,
+  jurisdiction = NULL,
+  alternatives = NULL,
+  ambiguities = NULL,
+  creator = NULL,
+  quietly = TRUE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>contest_name</code></td>
+<td>
+<p>For example &quot;Democratic Primary&quot;.
+With padding removed, used for first part of the <code>*.rda</code>
+file name for serializing the contest.</p>
+</td></tr>
+<tr valign="top"><td><code>source</code></td>
+<td>
+<p>Folder of CVR files.</p>
+</td></tr>
+<tr valign="top"><td><code>CVR_files</code></td>
+<td>
+<p>Cast Vote Record file names.</p>
+</td></tr>
+<tr valign="top"><td><code>original</code></td>
+<td>
+<p>If <code>original == TRUE</code>, <code>contest_str</code> must match
+an <code>object</code> value in <code>contest_keys.txt</code> file in working directory,
+with <code>cvr_url</code> value
+and all <code>cvr_file</code> values needed to reconstruct the election.</p>
+</td></tr>
+<tr valign="top"><td><code>contest_str</code></td>
+<td>
+<p>Must reference an <code>object</code> value in <code>key_values.txt</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>date_str</code></td>
+<td>
+<p>Encoded as MM/DD/YYYY. Forms the second part of the
+<code>*.rda</code> file name for serializing the contest.</p>
+</td></tr>
+<tr valign="top"><td><code>office</code></td>
+<td>
+<p>Encodes the name of the office or referendum at issue.
+With padding  removed, forms the third part of the
+<code>*.rda</code> file name for serializing the contest.</p>
+</td></tr>
+<tr valign="top"><td><code>jurisdiction</code></td>
+<td>
+<p>Set as appropriate.</p>
+</td></tr>
+<tr valign="top"><td><code>alternatives</code></td>
+<td>
+<p>Container for all alternatives in a <code>contest</code> (char).</p>
+</td></tr>
+<tr valign="top"><td><code>ambiguities</code></td>
+<td>
+<p>Container for ambiguities in a <code>contest</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>creator</code></td>
+<td>
+<p>Human creating <code>contest</code> object.</p>
+</td></tr>
+<tr valign="top"><td><code>quietly</code></td>
+<td>
+<p>When <code>FALSE</code> many routines get noisy.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An instance of class <code>contest</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>rcvr</em> version 0.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

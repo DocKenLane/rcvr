@@ -1,0 +1,508 @@
+---
+title: "Reproducing Maine Ranked Choice Tabulations"
+author: "Ken Lane"
+date: "12/23/2019"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    code_folding: show
+    theme: united
+    highlight: tango
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+urlcolor: red
+includes:
+  in_header: preamble.tex
+bibliography: rcvr.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Introduction
+## Ranked choice voting in Maine
+Commencing in June 2018,
+the State of Maine has used a type of ranked choice voting (RC) commonly called instant runoff (RC/IR).
+In November 2018
+Maine became
+the first state to implement
+RC/IR in elections
+for the United States House of Representatives
+and United States Senate.
+The use of RC was decisive in one congressional contest, 
+with CD2 incumbent Bruce Poliquin
+receiving the plurality (43.66\%) of first round votes,
+but lacking a majority, lost in the second round of tabulation [@nyt-poliquin].
+
+Subsequent to the November election, Congressman Poliquin and others filed a lawsuit against Maine Secretary of State Matthew Dunlap, 
+seeking to be declared the CD2 winner by virtue of a plurality in the first round tabulations [@npr-poliquin].
+Congressman Poliquin and fellow plaintiffs maintained that
+
+>
+    "... the RCV Act is unconstitutional, both facially and as applied, and that it violates the Voting
+    Rights Act. They maintain that the ballot form and instructions were too confusing and that the
+    manner by which Defendant Dunlap tabulated the votes diluted the votes cast by Poliquin supporters
+    and otherwise disenfranchised too many Maine voters to withstand scrutiny."
+
+
+While unsuccessful, the Poliquin lawsuit brought attention to the tabulation of
+RC/IR ballots.
+Public criticism included references to a ``proprietary
+algorithm'' used by the State to mechanize runoff tabulations [@muszynski].
+The algorithm in question is implemented in proprietary software,
+and as such,
+is not available for public scrutiny.
+Nonetheless,
+shortly after the public release of cast vote records on November 21, 2018,
+multiple parties reported successful independent duplication of official State
+tabulations [@mpr-poliquin],
+pointing out
+
+>
+    "... that the software the state uses is proprietary.
+    But the rules that are used by that software are just as public
+    as the election results."
+
+
+It would seem that independent duplication of official
+results falls short of validating
+the **propriety** of proprietary software.
+In particular, the following questions remain:
+
+1. Are the **rules complete**?
+       Do the rules completely
+       determine the disposition of every ballot?
+       If not, proprietary software would seem inappropriate.
+       
+2. Are the **rules consistent**? If not, every 
+      implementation will fall short and a revision of the
+      rules is indicated.
+
+3. Are the **rules independent**?
+      Would a proper subset of the rules always produce
+      the same result?
+      Independence is a component of clarity and concision,
+      key attributes for the communication and implementation
+      of the rules.
+
+4. Does the **implementation conform** to the rules?
+      Independent implementations often share share common flaws.
+      Duplication of results for a single election is inconclusive.
+
+The validation of software implementations is an extraordinary complex
+enterprise and has been carefully considered elsewhere [@vvsg; @vvsgd2; @eac-certification].
+The focus here is the rules.
+
+## Approach
+The case study follows from the author's effort to independently and unofficially
+validate RC/IR tabulations presented by State of Maine for the three RC/IR contests.
+In particular, the goal was to do the following:
+
+1. Create a mathematical model of tabulation processing
+     rendered in the vocabulary of set theory.
+     
+2. Examine State of Maine RC/IR election rules in the context of the model.
+
+3. Develop and implement an algorithm to independently verify (potentially) tabulations
+produced by the proprietary algorithm currently deployed in State of Maine RC/IR elections. 
+
+To accomplish the first two tasks,
+only official and publicly available sources were used to identify RC/IR tabulation rules.
+To avoid adopting hidden assumptions,
+others with potential knowledge of rules or tabulation implementations were not consulted.
+A "clean room" strategy likewise affords
+an opportunity to evaluate the independence (clarity
+and concision) embodied by the rules.
+The assumption being:
+
+>
+   Official rules ought to be sufficient to guide a software implementation
+        of an **independent tabulator** capable of reproducing Maine RC/IR tabulations.
+
+The results of the modeling effort are provided in a seperate
+[document](preference_extraction.pdf).
+An R package `rcvr` (Recievor) has been written to accomplish the final task
+is demonstrated in the sections that follow.
+
+# Recievor
+Minimal packages required for `rcvr` are `plyr` and `tidyverse`
+[^1].
+
+[^1]: `kableExtra` loaded soley to render this document and is not
+needed by Recievor.
+
+
+```{r setup, include = TRUE, echo = TRUE, message = FALSE}
+  library(plyr)
+  library(tidyverse)
+  library(kableExtra)
+  library(rcvr)
+```
+
+## Contest database
+Metadata to reconstruct elections are stored in the textfile `contest_keys.txt`,
+including filenames and URLs for downloading original
+cast vote record files from
+the Maine Office of the Secretary of State, Division
+of Elections [@ME_results].
+Thus far, three data sets are available, including:
+
+- June 12, 2018 - Primary Election
+  - Governor - Democrat (132250 CVRs)
+  - Representative to Congress District 2 - Democrat (50845 CVRs)
+  
+- November 6, 2018 - General Election
+  - Representative to Congress District 2 (296077 CVRs)
+
+
+```{r}
+  dat <- read.table("contest_keys.txt",
+                    sep = "|",
+                    col.names = c(
+                      "object",
+                      "field",
+                      "value"
+                    ),
+                    stringsAsFactors = FALSE,
+                    comment.char = "#")
+  knitr::kable(dat,
+               row.names = FALSE,
+               caption   = "Contest Keys Database") %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                  full_width = FALSE) %>%
+    scroll_box(width = "100%", height = "300px")
+```
+
+## Contest instances
+Recievor models each election using an S3 class `contest`
+[^2].
+
+[^2]: See `contest()` manual page [here](html/contest.html).
+
+Use `rrcv::contest()` to construct a `contest` instance,
+which will store metadata as `attributes`
+and edited ballot data in an underlying
+dataframe[^3].
+
+[^3]: See `clean_cvr_alternatives()` manual page [here](html/clean_cvr_alternatives.html)
+and `standardize_rankings` [here](html/standardize_rankings.html).
+
+1. If `original == TRUE` the `contest_str` must be set to an `object`
+found in the contest database,
+as well as valid values for `source`, `CVR_file`,
+and `alternative` fields
+matching `object`.
+
+2. If `original == FALSE` parameters for a folder (`source =`)
+and a list of cast vote records (`CVR_files =`)
+must be supplied when invoking `rcvr::contest()`.
+
+Once a `contest` instance is created tabulation is
+accomplished using `rcvr::conduct_runoff()`.
+
+## Tabulation options
+Tabulation of `contest` instances is accomplished by `rcvr::conduct_runoff()`,
+which provides options for processing
+overvotes and undervotes [^4].
+
+[^4]: See manual page for `conduct_runoff()` [here](html/conduct_runoff.html).
+
+For example under Maine rules,
+an overvote at a particular rank
+invalidates that choice and all subsequent choices.
+Other jurisdictions may ignore
+any or all overvotes.
+Under Maine rules, single
+undervotes are ignored but **two consecutive**
+undervotes invalidate all subsequent choice [@250c535].
+Maine law is more restrictive,
+with **two sequential** undervotes
+invalidating subsequent choices[@21AMRS723A].
+The default for `rcvr::conduct_runoff()`
+
+- `sequentialU == TRUE`
+- `max_U = 2`
+- `sequentialO == TRUE`
+- `max_O  = 1`
+
+# Retabulations
+## June 2018 Democratic Primary for Governor
+Call the constructor and encode the ballot choices to append
+to random ballot displayed in table below.
+
+$~$
+
+```{r cache = TRUE}
+  gov_June <- rcvr::contest(
+                      contest_name = "Democratic Primary for Governor",
+                      original     = TRUE,
+                      contest_str  = "gov_June",
+                      creator      = "Ken Lane")
+  codes    <- rcvr::get_codes(gov_June)
+```
+
+```{r}  
+  kable(rcvr::show_contest(gov_June),
+          row.names = FALSE,
+          booktabs  = TRUE,
+          caption   = "Metadata: Democratic Primary for Governor",
+          col.names = c("Item", "Value"),
+          digits    = 2,
+          longtable = TRUE) %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                  full_width        = FALSE) %>%
+    scroll_box(width = "100%", height = "300px")
+```
+
+```{r}
+  num_ballots <- attr(gov_June, "num_records")
+  df <- as.data.frame(gov_June)
+  df <- mutate(df, code = codes)
+  knitr::kable(df[sample(1:num_ballots, 100, replace = FALSE),],
+               row.names = FALSE,
+               caption   = "100 Random Ballots: Democratic Primary for Governor") %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+    scroll_box(width = "100%", height = "300px")
+```
+
+$~$
+
+June 2018 gubernatorial primary results posted by the State of Maine
+can be found [here](https://www.maine.gov/sos/cec/elec/results/results18.html#june18).
+This tabulation cannot be reproduced using the process described
+by the administrative rules
+[@250c535].
+The tabulation corresponding to the rules is easily generated.
+
+```{r cache = TRUE}
+tab1 <- rcvr::conduct_runoff(gov_June)
+df1  <- rcvr::make_report4(tab1)
+```
+
+
+Official Maine results can be duplicated by "tweaking" the rules [^5].
+
+[^5]: Tweaking implemented in `tabulate_cvr_rank()`.
+See manual page [here](html/tabulate_cvr_rank.html).
+
+```{r cache = TRUE}
+tab2 <- rcvr::conduct_runoff(gov_June,
+                             sequentialU = TRUE,
+                             june2018    = TRUE)
+df2  <- rcvr::make_report4(tab2)
+```
+
+
+```{r echo = FALSE}
+  df  <- cbind(df1[,1:2], df2[,2], df1[,3], df2[,3], df1[,4], df2[,4], df1[,5], df2[,5])
+  knitr::kable(df, 
+             row.names = FALSE,
+             booktabs  = TRUE,
+             caption   = "June 2018 Democratic Primary for Governor",
+             col.names = c("", "Rules", "Reported", "Rules", "Reported", "Rules", "Reported", "Rules", "Reported"),
+             longtable = TRUE
+) %>%
+  kable_styling(bootstrap_options = c("striped", "Scale_down", "repeat_header"),
+                full_width        = FALSE) %>%
+  add_header_above(c(" ", "Round 1" = 2, "Round 2" = 2, "Round 3" = 2, "Round 4" = 2)) %>%
+  pack_rows("Candidate Names", 1, 8, latex_gap_space = "2em") %>%
+  pack_rows("Ballot Exhausted", 9, 11, latex_gap_space = "2em")
+```
+
+While internally consistent (non-contradictory),
+the administrative rules are not
+in alignment with the corresponding statute
+with regard to skipped rankings [@21AMRS723A].
+In fact, parties reporting duplicating
+November CD2 tabulations were unable to duplicate
+results for the June Gubernatorial primary use the
+same algorithm [^6].
+
+[^6]: Personal communication with Nathan Tefft. See his
+python implementation [here](https://github.com/ntefft/rcv).
+
+Three idiosyncratic ballots from 
+the June 2018 gubernatorial primary
+have been identified.
+
+```{r ehco = TRUE}
+r1   <- unlist(tab1$round4$result)
+r2   <- unlist(tab2$round4$result)
+diff <- (r1 != r2)
+df   <- gov_June %>% as.data.frame()
+df   <- mutate(df, code = codes)
+dat  <- df[diff, c(1, 2, 12)]
+knitr::kable(dat, 
+             row.names = FALSE,
+             booktabs  = TRUE,
+             caption   = "Ballots of Interest",
+             col.names = c("CVR ID", "Precinct", "Coded Choices"),
+             digits    = 2,
+             longtable = TRUE)  %>%
+  kable_styling(bootstrap_options = c("striped", "repeat_header"),
+                full_width        = FALSE)
+```
+
+The three ballots would be awarded to candidate E (Janet Mills) in
+the fourth round using the "two consecutive" trimming rule.
+Independent implementations report 3 fewer votes for Janet Mills
+in the final round than the official tabulation.
+The results generated by the proprietary algorithm can be
+achieved by trimming each ballot after the second skipped ranking,
+**except** where the first skipped ranking is
+the first choice ranking.
+There were three such exceptional ballots
+
+- File: govd-2.xlsx, Row: 1315, Code: UGUBAEDC, Cast Vote Record: 13216: Precinct: Old Orchard Beach
+- File: govd-2.xlsx, Row: 33534, Code: UGUECGAF, Cast Vote Record: 141592: Precinct: Eastport
+- File: govd-2.xlsx, Row: 41151, Code: UCUAUUUU, Cast Vote Record: 173959: Precinct: Harpswell W1
+
+## June 2018 Maine CD2 Democratic Primary
+Use `contest.R` to construct a `contest` instance.
+
+```{r cache = TRUE}
+  d2_June <- rcvr::contest(
+    contest_name = "2018 Maine CD2 Democratic Primary",
+    original     = TRUE,
+    contest_str  = "d2_June",
+    creator      = "Ken Lane",
+    quietly      = TRUE)
+  codes    <- rcvr::get_codes(d2_June)
+```
+
+```{r echo = FALSE}  
+  knitr::kable(rcvr::show_contest(d2_June), 
+                row.names = FALSE,
+                booktabs  = TRUE,
+                caption   = "Metadata: CD2 Democratic Primary",
+                col.names = c("Item", "Value"),
+                digits    = 2,
+                longtable = TRUE)  %>%
+              kable_styling(bootstrap_options = c("striped", "repeat_header"),
+                            full_width        = FALSE) %>%
+    scroll_box(width = "100%", height = "300px")
+```
+
+```{r}
+  num_ballots <- attr(d2_June, "num_records")
+  df <- as.data.frame(d2_June)
+  df <- mutate(df, code = codes)
+  knitr::kable(df[sample(1:num_ballots, 100, replace = FALSE),],
+               row.names = FALSE,
+               caption   = "100 Random Ballots: CD2 Democratic Primary") %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+    scroll_box(width = "100%", height = "300px")
+```
+
+$~$
+
+Second district results can be reproduced using the administrative rules.
+Fewer ranks (5) avoid the rare pathologies found in
+the gubernatorial primary. In fact, the "tweaked" algorithm
+produces the same result as the official tabulation
+and the rules.
+First, using the administrative rules.
+
+```{r cache = TRUE}
+tab1 <- rcvr::conduct_runoff(d2_June)
+df3 <- make_report2(tab1)
+```
+
+And now invoke the "tweaked" version.
+
+```{r cache = TRUE}
+tab2 <- rcvr::conduct_runoff(
+  d2_June,
+  sequentialU = TRUE,
+  june2018    = TRUE)
+df4 <- make_report2(tab2)
+df  <- cbind(df3[,1:2], df4[,2], df3[,3], df4[,3])
+```
+
+```{r echo = FALSE}
+knitr::kable(df, 
+             row.names = FALSE,
+             booktabs  = TRUE,
+             digits    = 2,
+             caption   = "June 2018 Maine CD2 Democratic Primary",
+             col.names = c("", "Rules", "Reported", "Rules", "Reported"),
+             longtable = TRUE
+) %>%
+  kable_styling(bootstrap_options = c("striped", "repeat_header"),
+                full_width        = FALSE) %>%
+  add_header_above(c(" " = 1, "Round 1" = 2, "Round 2" = 2)) %>%
+  pack_rows("Candidate Names", 1, 4, latex_gap_space = "2em") %>%
+  pack_rows("Ballot Exhausted", 5, 7, latex_gap_space = "2em")
+
+```
+
+## November 2018 CD2 General Election
+Use `contest.R` to construct a `contest` instance.
+
+```{r cache = TRUE}
+  d2_Nov <- rcvr::contest(
+                      contest_name = "November 2018 Maine CD2 General Election",
+                      original     = TRUE,
+                      contest_str  = "d2_Nov",
+                      creator      = "Ken Lane",
+                      quietly      = TRUE)
+  codes <- get_codes(d2_Nov)
+```
+
+```{r echo = FALSE}  
+  knitr::kable(rcvr::show_contest(d2_Nov), 
+                row.names = FALSE,
+                booktabs  = TRUE,
+                caption   = "Metadata: CD2 General Election",
+                col.names = c("Item", "Value"),
+                digits    = 2,
+                longtable = TRUE)  %>%
+              kable_styling(bootstrap_options = c("striped"),
+                            full_width        = FALSE) %>%
+    scroll_box(width = "100%", height = "300px")
+```
+
+```{r}
+  num_ballots <- attr(d2_Nov, "num_records")
+  df <- as.data.frame(d2_Nov)
+  df <- mutate(df, code = codes)
+  knitr::kable(df[sample(1:num_ballots, 100, replace = FALSE),],
+               row.names = FALSE,
+               caption   = "100 Random Ballots: CD2 General Election") %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+    scroll_box(width = "100%", height = "300px")
+```
+
+$~$
+
+Tabulations using the administrative rules agree with official results [see here](https://www.maine.gov/sos/cec/elec/results/results18.html#Nov6).
+
+```{r cache = TRUE}
+tab <- rcvr::conduct_runoff(d2_Nov)
+df  <- make_report2(tab)
+```
+
+```{r echo = FALSE}
+knitr::kable(df, 
+             row.names = FALSE,
+             booktabs  = TRUE,
+             digits    = 2,
+             caption   = "November 2018 Maine CD2 General Election",
+             col.names = c(" ", "Round 1", "Round 2")) %>%
+  kable_styling(bootstrap_options = c("striped"),
+                full_width        = FALSE) %>%
+  pack_rows("Candidate Names", 1, 4, latex_gap_space = "2em") %>%
+  pack_rows("Ballot Exhausted", 5, 7, latex_gap_space = "2em")
+
+```
+
+# Session Information
+```{r echo = TRUE}
+  xfun::session_info(dependencies = FALSE)
+```
+
+# Bibliography
