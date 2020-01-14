@@ -1,9 +1,37 @@
 # rcvr
-Recievor
+## Recievor
 
 This package was designed to mechanize the reproducible
   tabulation of Maine Ranked Choce/Instant Runoff elections.
-  
+The work follows from the author's effort to independently and unofficially
+validate RC/IR tabulations presented by State of Maine for the three RC/IR contests.
+In particular, the goal was to do the following:
+
+1. Create a mathematical model of tabulation processing
+     rendered in the vocabulary of set theory.
+     
+2. Examine State of Maine RC/IR election rules in the context of the model.
+
+3. Develop and implement an algorithm to independently verify (potentially) tabulations
+produced by the proprietary algorithm currently deployed in State of Maine RC/IR elections. 
+
+To accomplish the first two tasks,
+only official and publicly available sources were used to identify RC/IR tabulation rules.
+To avoid adopting hidden assumptions,
+others with potential knowledge of rules or tabulation implementations were not consulted.
+A "clean room" strategy likewise affords
+an opportunity to evaluate the independence (clarity
+and concision) embodied by the rules.
+The assumption being:
+
+>
+   Official rules ought to be sufficient to guide a software implementation
+        of an **independent tabulator** capable of reproducing Maine RC/IR tabulations.
+
+The results of the modeling effort are provided in a separate
+[document](https://drive.google.com/open?id=1WG5EMDLCWpCZA0XmapqkEmJ0LxDMbD9- "Preference extraction: Modeling voter intent in ranked choice elections").
+Recievor has been written to accomplish the final task.
+
 ## Contest database
 Metadata to reconstruct elections are stored in the textfile `contest_keys.txt`,
 including filenames and URLs for downloading original
@@ -61,4 +89,7 @@ The default for `rcvr::conduct_runoff()`
 - `max_O  = 1`
 
 ## Retabulating Maine Elections
-[Yo](https://drive.google.com/open?id=1aJqReiWc3CzjtriG2pSgGasNcLDK61Ol "Hete")
+Rstudio can render the RMarkdown document `repro.Rmd` into a webpage that can be seen
+[here](https://rpubs.com/lanek/retab "Reproducing Maine Ranked Choice Tabulations").
+All inputs are downloaded from the State of Maine website.
+

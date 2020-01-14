@@ -25,6 +25,8 @@ editor_options:
 
 # Introduction
 ## Ranked choice voting in Maine
+
+[yo](https://rpubs.com/lanek/retab)
 Commencing in June 2018,
 the State of Maine has used a type of ranked choice voting (RC) commonly called instant runoff (RC/IR).
 In November 2018
