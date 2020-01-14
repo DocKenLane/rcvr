@@ -61,4 +61,4 @@ The default for `rcvr::conduct_runoff()`
 - `max_O  = 1`
 
 ## Retabulating Maine Elections
-[Yo](https://drive.google.com/open?id=1WG5EMDLCWpCZA0XmapqkEmJ0LxDMbD9- "Hete")
+[Yo](https://drive.google.com/open?id=1aJqReiWc3CzjtriG2pSgGasNcLDK61Ol "Hete")
