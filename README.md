@@ -52,12 +52,13 @@ undervotes are ignored but **two consecutive**
 undervotes invalidate all subsequent choice [(download here)](https://www.maine.gov/sos/cec/rules/29/250/250c535.docx "29-250 Code of Maine Rules Chapter 535: Rules Governing The Administration of Election Determined By Ranked-Choice Voting").
 Maine law is more restrictive,
 with **two sequential** undervotes
-invalidating subsequent choices[(here)](http://www.mainelegislature.org/legis/statutes/21-A/title21-Asec723-A.html "Title 21-A M.R.S. S 723-A Determination of winner in election for an office elected by ranked-choice voting").
+invalidating subsequent choices
+[(here)](http://www.mainelegislature.org/legis/statutes/21-A/title21-Asec723-A.html "Title 21-A M.R.S. S 723-A Determination of winner in election for an office elected by ranked-choice voting").
 The default for `rcvr::conduct_runoff()`
 
-- `sequentialU == TRUE`
+- `sequentialU == FALSE`
 - `max_U = 2`
-- `sequentialO == TRUE`
+- `sequentialO == FALSE`
 - `max_O  = 1`
 
 
