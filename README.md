@@ -5,7 +5,6 @@ This package was designed to mechanize the reproducible
   tabulation of Maine Ranked Choce/Instant Runoff elections.
   
 ## Contest database
-
 Metadata to reconstruct elections are stored in the textfile `contest_keys.txt`,
 including filenames and URLs for downloading original
 cast vote record files from
@@ -61,4 +60,4 @@ The default for `rcvr::conduct_runoff()`
 - `sequentialO == FALSE`
 - `max_O  = 1`
 
-
+## Retabulating Maine Elections
